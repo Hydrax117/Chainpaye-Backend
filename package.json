@@ -1,7 +1,7 @@
 {
   "name": "crossmint-test",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon",
