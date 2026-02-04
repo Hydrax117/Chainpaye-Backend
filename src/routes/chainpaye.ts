@@ -48,7 +48,7 @@ const idParamSchema = {
 
 /**
  * @route GET /:id
- * @desc Handle ChainPaye link access (https://www.chainpaye.com/{id})
+ * @desc Handle ChainPaye link access (https://chainpaye.com/payment/{id})
  * @access Public
  */
 router.get(

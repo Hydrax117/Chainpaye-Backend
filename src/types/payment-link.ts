@@ -3,6 +3,7 @@
 export interface CreatePaymentLinkRequest {
   merchantId: string;
   userId: string;
+  name: string; // Owner/business name to be displayed
   amount: string;
   currency: 'NGN' | 'USD';
   description?: string;
@@ -17,6 +18,7 @@ export interface CreatePaymentLinkResponse {
   id: string;
   merchantId: string;
   userId: string;
+  name: string; // Owner/business name to be displayed
   amount: string;
   currency: 'NGN' | 'USD';
   description?: string;
@@ -54,6 +56,7 @@ export interface PaymentLinkStatusResponse {
 export interface PaymentLinkVerificationResponse {
   id: string;
   isActive: boolean;
+  name: string; // Owner/business name to be displayed
   address: string;
   token: string;
   currency: string;

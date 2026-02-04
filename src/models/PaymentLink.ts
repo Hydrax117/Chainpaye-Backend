@@ -4,6 +4,7 @@ export interface IPaymentLink extends Document {
   id: string;
   merchantId: string;
   userId: string; // User who created the payment link
+  name: string; // Owner/business name to be displayed
   amount: string;
   currency: 'NGN' | 'USD';
   description?: string;
@@ -32,6 +33,13 @@ const PaymentLinkSchema: Schema = new Schema(
       required: [true, "User ID is required"],
       trim: true,
       index: true,
+    },
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      trim: true,
+      minlength: [1, "Name cannot be empty"],
+      maxlength: [100, "Name cannot exceed 100 characters"],
     },
     amount: {
       type: String,
@@ -104,15 +112,15 @@ const PaymentLinkSchema: Schema = new Schema(
     successUrl: {
       type: String,
       required: [true, "Success URL is required"],
-      default: "https://www.chainpaye.com/",
+      default: "https://chainpaye.com/",
       trim: true,
     },
-    // linkUrl: {
-    //   type: String,
-    //   required: [true, "Link URL is required"],
-    //   trim: true,
-    //   unique: true,
-    // },
+    linkUrl: {
+      type: String,
+      required: [true, "Link URL is required"],
+      trim: true,
+      unique: true,
+    },
     metadata: {
       type: Schema.Types.Mixed,
       default: {}
