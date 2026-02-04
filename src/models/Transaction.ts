@@ -103,8 +103,8 @@ const TransactionSchema: Schema = new Schema(
       type: String,
       required: [true, "Currency is required"],
       enum: {
-        values: ['NGN', 'USD'],
-        message: "Currency must be either NGN or USD"
+        values: ['NGN', 'USD', 'GBP', 'EUR'],
+        message: "Currency must be one of: NGN, USD, GBP, EUR"
       }
     },
     payerInfo: {

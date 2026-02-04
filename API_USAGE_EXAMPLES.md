@@ -181,3 +181,126 @@ The `name` field can be used for various types of businesses:
 5. **Record Keeping**: Better transaction tracking and reporting
 
 The name field will be displayed to customers when they access the payment link, helping them identify who they're paying and building trust in the transaction.
+
+## Create Payment Link with GBP Currency
+
+### Request
+```bash
+POST /api/v1/payment-links
+Content-Type: application/json
+
+{
+  "merchantId": "merchant-uk-123",
+  "userId": "user-uk-456",
+  "name": "London Tech Services",
+  "amount": "150.00",
+  "currency": "GBP",
+  "token": "USDT",
+  "selectedCurrency": "GBP",
+  "paymentType": "card",
+  "description": "UK consulting services"
+}
+```
+
+### Response
+```json
+{
+  "success": true,
+  "data": {
+    "id": "507f1f77bcf86cd799439022",
+    "merchantId": "merchant-uk-123",
+    "userId": "user-uk-456",
+    "name": "London Tech Services",
+    "amount": "150.00",
+    "currency": "GBP",
+    "description": "UK consulting services",
+    "isActive": true,
+    "address": "0x3c45e44daae997b3ac8644ff3fdd13c120634f10",
+    "token": "USDT",
+    "selectedCurrency": "GBP",
+    "paymentType": "card",
+    "successUrl": "https://chainpaye.com/",
+    "linkUrl": "https://chainpaye.com/payment/507f1f77bcf86cd799439022",
+    "metadata": {},
+    "createdAt": "2026-02-04T02:15:00.000Z",
+    "updatedAt": "2026-02-04T02:15:00.000Z"
+  },
+  "message": "Payment link created successfully",
+  "timestamp": "2026-02-04T02:15:00.000Z",
+  "correlationId": "gbp123-def456"
+}
+```
+
+## Create Payment Link with EUR Currency
+
+### Request
+```bash
+POST /api/v1/payment-links
+Content-Type: application/json
+
+{
+  "merchantId": "merchant-eu-123",
+  "userId": "user-eu-456",
+  "name": "Berlin Digital Agency",
+  "amount": "200.00",
+  "currency": "EUR",
+  "token": "USDT",
+  "selectedCurrency": "EUR",
+  "paymentType": "card",
+  "description": "European digital marketing services"
+}
+```
+
+### Response
+```json
+{
+  "success": true,
+  "data": {
+    "id": "507f1f77bcf86cd799439033",
+    "merchantId": "merchant-eu-123",
+    "userId": "user-eu-456",
+    "name": "Berlin Digital Agency",
+    "amount": "200.00",
+    "currency": "EUR",
+    "description": "European digital marketing services",
+    "isActive": true,
+    "address": "0x3c45e44daae997b3ac8644ff3fdd13c120634f10",
+    "token": "USDT",
+    "selectedCurrency": "EUR",
+    "paymentType": "card",
+    "successUrl": "https://chainpaye.com/",
+    "linkUrl": "https://chainpaye.com/payment/507f1f77bcf86cd799439033",
+    "metadata": {},
+    "createdAt": "2026-02-04T02:15:00.000Z",
+    "updatedAt": "2026-02-04T02:15:00.000Z"
+  },
+  "message": "Payment link created successfully",
+  "timestamp": "2026-02-04T02:15:00.000Z",
+  "correlationId": "eur123-def456"
+}
+```
+
+## Supported Currencies and Payment Types
+
+| Currency | Code | Payment Types | Notes |
+|----------|------|---------------|-------|
+| Nigerian Naira | NGN | Bank transfer only | Local bank transfers |
+| US Dollar | USD | Card payments | Credit/debit cards supported |
+| British Pound | GBP | Card payments | Credit/debit cards supported |
+| Euro | EUR | Card payments | Credit/debit cards supported |
+
+### Payment Type Rules
+- **NGN**: Must use `"paymentType": "bank"` (card payments not supported)
+- **USD, GBP, EUR**: Can use `"paymentType": "card"` (recommended) or `"paymentType": "bank"`
+- Invalid combinations will return a validation error
+
+### Example Validation Error
+```json
+{
+  "success": false,
+  "error": "Validation failed",
+  "message": "Card payments are supported for USD, GBP, EUR. NGN must use bank transfer.",
+  "timestamp": "2026-02-04T02:15:00.000Z",
+  "correlationId": "error123-def456"
+}
+```

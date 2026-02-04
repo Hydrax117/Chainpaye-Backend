@@ -5,7 +5,7 @@ export interface CreatePaymentLinkRequest {
   userId: string;
   name: string; // Owner/business name to be displayed
   amount: string;
-  currency: 'NGN' | 'USD';
+  currency: 'NGN' | 'USD' | 'GBP' | 'EUR';
   description?: string;
   token: string;
   selectedCurrency: string;
@@ -20,7 +20,7 @@ export interface CreatePaymentLinkResponse {
   userId: string;
   name: string; // Owner/business name to be displayed
   amount: string;
-  currency: 'NGN' | 'USD';
+  currency: 'NGN' | 'USD' | 'GBP' | 'EUR';
   description?: string;
   isActive: boolean;
   address: string;
