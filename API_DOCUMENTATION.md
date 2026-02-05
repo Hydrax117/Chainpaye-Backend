@@ -64,7 +64,8 @@ Create a new payment link.
   "paymentType": "bank | card (required)",
   "description": "string (optional, max 500 chars)",
   "successUrl": "string (optional, max 500 chars)",
-  "metadata": "object (optional)"
+  "metadata": "object (optional)"*
+  "address": "user torronet wallet address"
 }
 ```
 
