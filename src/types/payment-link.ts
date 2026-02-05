@@ -12,6 +12,7 @@ export interface CreatePaymentLinkRequest {
   paymentType: 'bank' | 'card';
   successUrl?: string;
   metadata?: Record<string, any>;
+  address?:string
 }
 
 export interface CreatePaymentLinkResponse {

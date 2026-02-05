@@ -19,6 +19,11 @@ export const CreatePaymentLinkSchema: ValidationSchema<CreatePaymentLinkRequest>
     minLength: 1,
     maxLength: 255,
   },
+  address:{
+   type:'string',
+   required:true,
+   
+  },
   name: {
     type: 'string',
     required: true,
