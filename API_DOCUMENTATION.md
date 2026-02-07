@@ -8,6 +8,46 @@ https://your-api-domain.com/api/v1
 ## Authentication
 Currently, all endpoints are public. In production, implement proper authentication and authorization.
 
+## Rate Limiting
+
+The API implements comprehensive rate limiting to ensure fair usage and protect against abuse. All requests are subject to rate limits based on IP address and endpoint type.
+
+### Rate Limit Headers
+
+All responses include rate limit information in headers:
+- `RateLimit-Limit`: Maximum number of requests allowed in the window
+- `RateLimit-Remaining`: Number of requests remaining in the current window
+- `RateLimit-Reset`: Unix timestamp when the rate limit resets
+
+### Rate Limit Configuration
+
+| Endpoint Type | Limit | Window | Applies To |
+|--------------|-------|--------|------------|
+| Burst Protection | 20 | 1 minute | All endpoints |
+| General API | 100 | 15 minutes | All endpoints |
+| Payment Link Creation | 20 | 10 minutes | POST /payment-links |
+| Payment Access | 50 | 5 minutes | GET/POST /payment/:id |
+| Transaction Recording | 30 | 5 minutes | POST /transactions |
+| Read Operations | 200 | 15 minutes | All GET requests |
+| Sensitive Operations | 10 | 30 minutes | PATCH enable/disable |
+
+### Rate Limit Exceeded Response
+
+When rate limit is exceeded, the API returns HTTP 429:
+
+```json
+{
+  "success": false,
+  "error": "Too many requests",
+  "message": "Too many requests from this IP, please try again later.",
+  "retryAfter": "15 minutes",
+  "timestamp": "2026-02-07T12:00:00.000Z",
+  "correlationId": "rate-limit-exceeded"
+}
+```
+
+For detailed rate limiting documentation, see [RATE_LIMITING.md](RATE_LIMITING.md).
+
 ## Common Response Format
 All API responses follow this standard format:
 
@@ -25,6 +65,7 @@ All API responses follow this standard format:
 ## Error Handling
 - **400 Bad Request**: Validation errors, invalid parameters
 - **404 Not Found**: Resource not found
+- **429 Too Many Requests**: Rate limit exceeded
 - **500 Internal Server Error**: Server errors
 
 ---
@@ -64,8 +105,7 @@ Create a new payment link.
   "paymentType": "bank | card (required)",
   "description": "string (optional, max 500 chars)",
   "successUrl": "string (optional, max 500 chars)",
-  "metadata": "object (optional)"*
-  "address": "user torronet wallet address"
+  "metadata": "object (optional)"
 }
 ```
 

@@ -12,6 +12,10 @@ import { AuditService } from '../services/AuditService';
 import { validateRequest } from '../middleware/validation';
 import { RecordTransactionSchema } from '../types/schemas';
 import { asyncHandler } from '../middleware/errorHandler';
+import { 
+  healthCheckRateLimit, 
+  recordTransactionRateLimit 
+} from '../middleware/rateLimiter';
 
 const router = Router();
 
@@ -30,8 +34,8 @@ const transactionManager = new TransactionManager(
 );
 const transactionController = new TransactionController(transactionManager, stateManager);
 
-// Health check endpoint
-router.get('/health', (req, res) => {
+// Health check endpoint with specific rate limiting
+router.get('/health', healthCheckRateLimit, (req, res) => {
   res.json({
     success: true,
     message: 'Payment Link System API is running',
@@ -55,9 +59,10 @@ router.post('/test', (req, res) => {
 router.use('/payment-links', paymentLinksRouter);
 router.use('/transactions', transactionsRouter);
 
-// Record transaction endpoint (standalone)
+// Record transaction endpoint (standalone) with specific rate limiting
 router.post(
   '/record-transaction/:transactionId',
+  recordTransactionRateLimit,
   validateRequest({ body: RecordTransactionSchema }),
   asyncHandler(transactionController.recordTransaction.bind(transactionController))
 );

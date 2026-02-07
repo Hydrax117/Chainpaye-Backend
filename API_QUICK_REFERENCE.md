@@ -5,6 +5,17 @@
 https://your-api-domain.com/api/v1
 ```
 
+## Rate Limits
+
+| Operation | Limit | Window |
+|-----------|-------|--------|
+| General API | 100 req | 15 min |
+| Create Payment Link | 20 req | 10 min |
+| Access Payment | 50 req | 5 min |
+| Read Operations | 200 req | 15 min |
+
+**Rate Limit Headers**: `RateLimit-Limit`, `RateLimit-Remaining`, `RateLimit-Reset`
+
 ## Quick Start
 
 ### 1. Create Payment Link

@@ -10,6 +10,7 @@ import { AuditService } from '../services/AuditService';
 import { ToronetService } from '../services/ToronetService';
 import { TransactionManager } from '../services/TransactionManager';
 import { StateManager } from '../services/StateManager';
+import { paymentAccessRateLimit } from '../middleware/rateLimiter';
 
 const router = Router();
 
@@ -53,6 +54,7 @@ const idParamSchema = {
  */
 router.get(
   '/:id',
+  paymentAccessRateLimit,
   validateRequest({ params: idParamSchema }),
   asyncHandler(paymentLinkController.accessPaymentLink.bind(paymentLinkController))
 );
@@ -64,6 +66,7 @@ router.get(
  */
 router.post(
   '/:id',
+  paymentAccessRateLimit,
   validateRequest({ params: idParamSchema }),
   asyncHandler(paymentLinkController.accessPaymentLink.bind(paymentLinkController))
 );
