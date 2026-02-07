@@ -8,6 +8,28 @@ https://your-api-domain.com/api/v1
 ## Authentication
 Currently, all endpoints are public. In production, implement proper authentication and authorization.
 
+## CORS (Cross-Origin Resource Sharing)
+
+The API supports cross-origin requests from frontend applications.
+
+### CORS Configuration
+- **Allowed Origins:** Configurable via `CORS_ORIGIN` environment variable
+- **Allowed Methods:** GET, POST, PUT, PATCH, DELETE, OPTIONS
+- **Credentials:** Supported (cookies and authentication headers)
+- **Exposed Headers:** Rate limit headers are exposed for client monitoring
+
+### Development
+```bash
+CORS_ORIGIN=*  # Allows all origins
+```
+
+### Production
+```bash
+CORS_ORIGIN=https://chainpaye.com,https://www.chainpaye.com
+```
+
+For detailed CORS configuration, see [CORS_CONFIGURATION.md](CORS_CONFIGURATION.md).
+
 ## Rate Limiting
 
 The API implements comprehensive rate limiting to ensure fair usage and protect against abuse. All requests are subject to rate limits based on IP address and endpoint type.

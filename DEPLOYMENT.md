@@ -29,7 +29,25 @@ TORONET_ADMIN_ADDRESS=your_admin_address
 TORONET_ADMIN_PASSWORD=your_admin_password
 ENCRYPTION_KEY_V1=your_encryption_key_v1
 ENCRYPTION_KEY_V2=your_encryption_key_v2
+
+# CORS Configuration (IMPORTANT for production)
+CORS_ORIGIN=https://chainpaye.com,https://www.chainpaye.com
 ```
+
+### CORS Configuration
+**Development:**
+```env
+CORS_ORIGIN=*
+```
+
+**Production (REQUIRED):**
+```env
+CORS_ORIGIN=https://chainpaye.com,https://www.chainpaye.com,https://app.chainpaye.com
+```
+
+⚠️ **Security Warning:** Never use `CORS_ORIGIN=*` in production. Always specify exact domains.
+
+For detailed CORS configuration, see [CORS_CONFIGURATION.md](CORS_CONFIGURATION.md).
 
 ## Platform-Specific Deployment
 
