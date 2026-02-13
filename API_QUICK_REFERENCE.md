@@ -18,7 +18,17 @@ https://your-api-domain.com/api/v1
 
 ## Quick Start
 
-### 1. Create Payment Link
+### 1. Get All Transactions
+```bash
+GET /transactions?state=COMPLETED&currency=USD&page=1&limit=10
+```
+
+### 2. Get Merchant's Successful Transactions
+```bash
+GET /payment-links/merchant/merchant-123/successful-transactions?page=1&limit=10&sortBy=paidAt&sortOrder=desc
+```
+
+### 3. Create Payment Link
 ```bash
 POST /payment-links
 {
@@ -34,7 +44,7 @@ POST /payment-links
 }
 ```
 
-### 2. Access Payment Link
+### 4. Access Payment Link
 ```bash
 POST /payment-links/{id}/access
 {
@@ -45,7 +55,29 @@ POST /payment-links/{id}/access
 }
 ```
 
-### 3. Record Transaction
+### 5. Start Immediate Verification
+```bash
+POST /transactions/{id}/verify
+Headers: admin, adminpwd
+{
+  "senderName": "John Doe",
+  "senderPhone": "+1234567890", 
+  "senderEmail": "john@example.com",
+  "currency": "USD",
+  "txid": "toro_ref_123",
+  "paymentType": "card",
+  "amount": "100.00",
+  "successUrl": "https://merchant.com/webhook"
+}
+```
+
+### 6. Check Transaction Status
+```bash
+GET /transactions/{id}/status
+Headers: admin, adminpwd
+```
+
+### 7. Record Transaction
 ```bash
 POST /record-transaction/{transactionId}
 {
@@ -70,14 +102,19 @@ POST /record-transaction/{transactionId}
 | PATCH | `/payment-links/:id/disable` | Disable payment link |
 | PATCH | `/payment-links/:id/enable` | Enable payment link |
 | GET | `/payment-links/:id/status` | Get payment link status |
-| GET | `/payment-links/:id/verify` | Verify payment link |
+| GET | `/payment-links/:id/verify` | Verify payment link details |
+| POST | `/payment-links/:id/verify` | ❌ Deprecated (returns error) |
 | POST | `/payment-links/:id/access` | Access payment link |
 | POST | `/payment-links/:id` | Access payment link (alt) |
 | GET | `/payment-links/:id/transactions` | Get link transactions |
+| GET | `/payment-links/merchant/:merchantId/successful-transactions` | Get merchant's successful transactions |
 | **Transactions** |
+| GET | `/transactions` | Get all transactions |
 | POST | `/transactions` | Create transaction |
 | GET | `/transactions/:id` | Get transaction |
 | POST | `/transactions/:id/initialize` | Initialize payment |
+| POST | `/transactions/:id/verify` | Start immediate verification |
+| GET | `/transactions/:id/status` | Check transaction status |
 | PATCH | `/transactions/:id/state` | Update transaction state |
 | GET | `/transactions/:id/state-history` | Get state history |
 | POST | `/record-transaction/:id` | Record transaction |
